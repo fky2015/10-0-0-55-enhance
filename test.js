@@ -1,21 +1,3 @@
-// ==UserScript==
-// @name         10.0.0.55 enhance
-// @namespace    http://tampermonkey.net/
-// @version      0.9.7
-// @description  make 10.0.0.55 clearer and better
-// @author       FKYnJYQ
-// @match        http://10.0.0.55/srun_portal_pc.php?ac_id=*
-// @grant        GM_addStyle
-// @grant        GM_setValue
-// @grant        GM_getValue
-// ==/UserScript==
-
-// 注意还有头文件在TM编辑器中
-
-// 加入此句以消除GM的影响
-// https://stackoverflow.com/questions/12146445/jquery-in-greasemonkey-1-0-conflicts-with-websites-using-jquery
-// this.$ = this.jQuery = jQuery.noConflict(true);
-// 不要了
 
 // 注意还有头文件在TM编辑器中
 
@@ -138,7 +120,7 @@ input:-webkit-autofill {
 
     var bg_colors = [
         "#777FAD", "#880E4F", "#3F51B5",
-        "#2196F3", "#5281EA", "#0097A7", "#009688", "#71897E",
+        "#2196F3", "#0081EA", "#0097A7", "#009688", "#71897E",
         "#C8967B", "#616161", "#607D8B", "#516B85",
         "#688D68", "#874F59","#86CC73","#FF8E88","#CCBDB6","#5F8597","#674172","#013243",
         "#22313F","#336E7B","#1E824C","#541e24","#4f4859"
