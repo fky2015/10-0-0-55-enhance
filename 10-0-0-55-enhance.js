@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         10.0.0.55 enhance
 // @namespace    http://tampermonkey.net/
-// @version      0.9.8
+// @version      1.0.0
 // @description  make 10.0.0.55 clearer and better
 // @author       FKYnJYQ
 // @match        http://10.0.0.55/srun_portal_pc.php?ac_id=*
@@ -59,7 +59,7 @@ transition: box-shadow 0.3s ease-in-out;
 }
 
 
-.hb-border-bottom-br4::after ,#button::after {
+.hb-border-bottom-br4::after ,#button::after{
 box-sizing: border-box;
 position: absolute;
 width: 100%;
@@ -89,6 +89,9 @@ opacity: 1;
 *{
 font-family: monospace, sans-serif;
 box-sizing:border-box;
+text-decoration: none;
+color: rgb(255, 255, 255);
+white-space: nowrap;
 }
 
 input:-webkit-autofill,
@@ -117,16 +120,18 @@ input:-webkit-autofill {
 -webkit-animation-name: autofill;
 -webkit-animation-fill-mode: both;
 }
+
+#menu>div:hover{
+    box-shadow:3px 4px 6px rgba(27,31,35,0.35);
+    transition: box-shadow 0.3s ease-in-out ;
+}
+
 `);
 
     }
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
-    }
-
-    function pick_color() {
-        return bg_colors[getRandomInt(bg_colors.length)];
     }
 
     function padNumber(num, fill) {
@@ -144,49 +149,74 @@ input:-webkit-autofill {
             padNumber(parseInt(parseInt(s.slice(5, 7), 16) * portion / 100).toString(16), 2)
     }
 
+    function pick_color() {
+        return bg_colors[getRandomInt(bg_colors.length)];
+    }
+
     function htmlEncode(value) {
         return $('<div/>').text(value).html();
     }
+
+    function sayHello(){
+        var a = new Date().getHours();
+        if (a>6 && a<12){
+            return '早安'
+        }
+        else if(a>=12 && a< 15){
+            return '午安'
+        }
+        else if(a>=15 && a<20){
+            return '你好'
+        }
+        else if(a>=20 && a<24){
+            return '晚安'
+        }
+        else{
+            return '早点睡'
+        }
+    }
+    
     var Local = {}
+    Local.leftMouse = 0
     Local.username = GM_getValue("username") || "";
     Local.password = GM_getValue("password") || "";
     Local.input_text = GM_getValue("input_text") || "For Freedom";
 
     var bg_colors = [
-        "#777FAD", "#880E4F", "#3F51B5",
-        "#2196F3", "#5281EA", "#0097A7", "#009688", "#71897E",
+        "#777FAD", "#880E4F", "#3F5195",
+        "#2196A3", "#5281EA", "#0097A7", "#009688", "#71897E",
         "#C8967B", "#616161", "#607D8B", "#516B85",
-        "#688D68", "#874F59", "#86CC73", "#FF8E88", "#CCBDB6", "#5F8597", "#674172", "#013243",
-        "#22313F", "#336E7B", "#1E824C", "#541e24", "#4f4859"
+        "#688D68", "#874F59", "#86CC73", "#FF8E88", "#CCBDB6", "#5F8597", "#674172", "#313953",
+        "#22313F", "#336E7B", "#1E824C", "#541e24", "#4f4859","#BBBB8A",
+        "#8ABBBB", "#A38ABB" , "#739A9A"
     ];
     var bg_color = pick_color();
+    var bg_color_dark = reduce(bg_color,90)
 
-
-    $(".logo").remove();
-    //     $("body").css("background-image","url(http://localhost:10000/bg-1.JPG)");
+    
     $("body").css("background-color", bg_color);
-    $(" ul.login>li:nth-child(3)>label:nth-child(2)").remove();
-    $("label.margbt").remove();
-    //     $(".container").css("height","-webkit-fill-available");
-    $("p.margbt").remove();
-    $(".float_l").remove();
+    // $(".logo").remove();
+    // $(" ul.login>li:nth-child(3)>label:nth-child(2)").remove();
+    // $("label.margbt").remove();
+    // $("p.margbt").remove();
+    // $(".float_l").remove();
     $(".footer").remove();
-    $(".navbar").remove();
+    // $(".navbar").remove();
     $(".a.a_demo_one, #pc_logout, #goto_services").addClass("hbtn").addClass("hb-border-bottom-br4").removeClass("a_demo_one");
     $("body").css("margin", "0");
     $("body").append($(`<div id="menu" >
-<div><div>
-<a href="http://10.0.0.54:8800" target="_blank" class ="hbtn hb-border-bottom-br4">自服务</a>
-</div></div>
-<div><div>
-<a href="http://nsc-mis.info.bit.edu.cn/selfServicePaid" target="_blank" class ="hbtn hb-border-bottom-br4">在线充值</a>
-</div></div>
-<div><div>
-<a class ="hbtn hb-border-bottom-br4"> <input type="text" id="input_text"> </a>
-</div></div>
-<div><div>
-<a class ="hbtn hb-border-bottom-br4">some</a>
-</div></div>
+<div><div><div class="hbtn hb-border-bottom-br4">
+<a href="http://10.0.0.54:8800" target="_blank" >自服务</a>
+</div></div></div>
+<div><div><div class="hbtn hb-border-bottom-br4">
+<a href="http://nsc-mis.info.bit.edu.cn/selfServicePaid" target="_blank" >在线充值</a>
+</div></div></div>
+<div><div><div class ="hbtn hb-border-bottom-br4">
+<a > <input type="text" id="input_text"> </a>
+</div></div></div>
+<div><div><div class="hbtn hb-border-bottom-br4">
+<a>someColor</a>
+</div></div></div>
 </div>`));
     $("body").append($('<div id="yingying" ><a id="ying" class="hbtn hb-border-bottom-br4" style="font-size:40px">Welcome To BIT</a></div>'));
     $("body").append($(`<div id="form" >
@@ -255,17 +285,29 @@ input:-webkit-autofill {
             }
 
         }
-        // right
-        else if (event.which == 2) {
+        // middle
+        else if (event.which == 2 || (event.which == 3 && event.ctrlKey)) {
             $("#form").toggle("slow");
-        } else if (event.which == 3) {
+        }
+        // right
+        else if (event.which == 3 && !event.ctrlKey) {
             $("#username")[0].value = Local.username || $("#username")[0].value;
             $("#password")[0].value = Local.password || $("#password")[0].value;
             logout_button.click();
             return false;
         }
     });
+    $("#menu>div:nth-child(4)>div").mousedown((event)=>{
 
+        console.log(Local.leftMouse)
+        if(Local.leftMouse == 10){
+            $("#ying").text("上网不涉密，涉密不上网。")
+        }
+        else{
+            Local.leftMouse++;
+        }
+        $("#menu>div:nth-child(4)>div a").text(sayHello());
+    });
     // 注释掉此行得到完整表单
     $(".container").css("width", "auto").css("height", "auto").hide();
 
@@ -278,12 +320,16 @@ input:-webkit-autofill {
         "position": "relative",
         "top": "30%"
     });
-    $("#ying,input").css({
+
+    $("#ying,#form input").css({
         "text-shadow": "2px 4px 6px rgba(27,31,35,0.35)"
     });
-    $("#menu>div").css({
-        "box-shadow": "3px 4px 6px rgba(27,31,35,0.35)"
+    $("#menu>div:hover").css({
+        "box-shadow": "0"
     });
+    // $("#menu>div:hover").css({
+    //     "box-shadow": "2px 2px 4px rgba(27,31,35,0.25)"
+    // });
     $("#GM_username,#GM_password").css({
         "background": "transparent",
         "border": "0",
@@ -312,17 +358,24 @@ input:-webkit-autofill {
         "right": "auto"
     });
 
+    console.log(bg_color)
     $("#menu>div").css({
         "float": "left",
         "width": "25%",
         "height": "70px",
-        "background": "#C9C9C9"
+        "background": bg_color
     }).hide();
     $("#menu>div>div").css({
         "width": "50%",
         "height": "40px",
         "margin": "auto",
         "margin-top": "15px"
+    });
+    $("#menu>div>div>div").css({
+        "width": "100%",
+        "height": "40px",
+        "margin": "auto"
+        // ,"overflow":"hidden" // 若使用则无阴影
     });
     $("#menu a").css({
         "height": "40px",
