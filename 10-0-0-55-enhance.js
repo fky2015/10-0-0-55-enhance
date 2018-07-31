@@ -128,7 +128,23 @@ input:-webkit-autofill {
     function pick_color() {
         return bg_colors[getRandomInt(bg_colors.length)];
     }
-    function htmlEncode(value){
+
+    function padNumber(num, fill) {
+        //改自：http://blog.csdn.net/aimingoo/article/details/4492592
+        var len = ('' + num).length;
+        return (Array(
+            fill > len ? fill - len + 1 || 0 : 0
+        ).join(0) + num);
+    }
+
+    function reduce(s, portion) {
+        // 将rgb各减小‘portion/100’比例输出
+        return '#' + padNumber(parseInt(parseInt(s.slice(1, 3), 16) * portion / 100).toString(16), 2) +
+            padNumber(parseInt(parseInt(s.slice(3, 5), 16) * portion / 100).toString(16), 2) +
+            padNumber(parseInt(parseInt(s.slice(5, 7), 16) * portion / 100).toString(16), 2)
+    }
+
+    function htmlEncode(value) {
         return $('<div/>').text(value).html();
     }
     var Local = {}
@@ -140,8 +156,8 @@ input:-webkit-autofill {
         "#777FAD", "#880E4F", "#3F51B5",
         "#2196F3", "#5281EA", "#0097A7", "#009688", "#71897E",
         "#C8967B", "#616161", "#607D8B", "#516B85",
-        "#688D68", "#874F59","#86CC73","#FF8E88","#CCBDB6","#5F8597","#674172","#013243",
-        "#22313F","#336E7B","#1E824C","#541e24","#4f4859"
+        "#688D68", "#874F59", "#86CC73", "#FF8E88", "#CCBDB6", "#5F8597", "#674172", "#013243",
+        "#22313F", "#336E7B", "#1E824C", "#541e24", "#4f4859"
     ];
     var bg_color = pick_color();
 
@@ -228,15 +244,14 @@ input:-webkit-autofill {
         // left with ctrl
         else if (event.which == 1 && event.ctrlKey) {
             var menu = $("#menu>div")
-            if(menu.is(":hidden")){
-            $("#menu>div").first().slideToggle("fast", function showNext() {
-                $(this).next("div").slideToggle("fast", showNext);
-            });
-            }
-            else{
+            if (menu.is(":hidden")) {
+                $("#menu>div").first().slideToggle("fast", function showNext() {
+                    $(this).next("div").slideToggle("fast", showNext);
+                });
+            } else {
                 $("#menu>div").last().slideToggle("fast", function showNext() {
-                $(this).prev("div").slideToggle("fast", showNext);
-            });
+                    $(this).prev("div").slideToggle("fast", showNext);
+                });
             }
 
         }
@@ -263,8 +278,12 @@ input:-webkit-autofill {
         "position": "relative",
         "top": "30%"
     });
-    $("#ying,input").css({"text-shadow":"2px 4px 6px rgba(27,31,35,0.35)"});
-    $("#menu>div").css({"box-shadow":"3px 4px 6px rgba(27,31,35,0.35)"});
+    $("#ying,input").css({
+        "text-shadow": "2px 4px 6px rgba(27,31,35,0.35)"
+    });
+    $("#menu>div").css({
+        "box-shadow": "3px 4px 6px rgba(27,31,35,0.35)"
+    });
     $("#GM_username,#GM_password").css({
         "background": "transparent",
         "border": "0",
@@ -323,8 +342,7 @@ input:-webkit-autofill {
     });
     if (Local.username && Local.password) {
         $("#yingying").show("fast");
-    }
-    else{
+    } else {
         $("#form").toggle("slow");
     }
 })();
