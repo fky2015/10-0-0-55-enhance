@@ -19,6 +19,15 @@
 
 // 注意还有头文件在TM编辑器中
 
+// 注意还有头文件在TM编辑器中
+
+// 加入此句以消除GM的影响
+// https://stackoverflow.com/questions/12146445/jquery-in-greasemonkey-1-0-conflicts-with-websites-using-jquery
+// this.$ = this.jQuery = jQuery.noConflict(true);
+// 不要了
+
+// 注意还有头文件在TM编辑器中
+
 
 (function () {
     'use strict';
@@ -87,7 +96,7 @@ opacity: 1;
 }
 
 *{
-font-family: monospace, sans-serif;
+font-family: monospace, Courier, 'Courier New';
 box-sizing:border-box;
 text-decoration: none;
 color: rgb(255, 255, 255);
@@ -297,6 +306,7 @@ input:-webkit-autofill {
             return false;
         }
     });
+    document.getElementById("ying").oncontextmenu = ()=>{return false;};
     $("#menu>div:nth-child(4)>div").mousedown((event)=>{
 
         console.log(Local.leftMouse)
