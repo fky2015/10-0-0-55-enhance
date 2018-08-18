@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         10.0.0.55 enhance
 // @namespace    http://tampermonkey.net/
-// @version      1.0.0
+// @version      1.1.0
 // @description  make 10.0.0.55 clearer and better
 // @author       FKYnJYQ
 // @match        http://10.0.0.55/srun_portal_pc.php?ac_id=*
@@ -9,24 +9,6 @@
 // @grant        GM_setValue
 // @grant        GM_getValue
 // ==/UserScript==
-
-// 注意还有头文件在TM编辑器中
-
-// 加入此句以消除GM的影响
-// https://stackoverflow.com/questions/12146445/jquery-in-greasemonkey-1-0-conflicts-with-websites-using-jquery
-// this.$ = this.jQuery = jQuery.noConflict(true);
-// 不要了
-
-// 注意还有头文件在TM编辑器中
-
-// 注意还有头文件在TM编辑器中
-
-// 加入此句以消除GM的影响
-// https://stackoverflow.com/questions/12146445/jquery-in-greasemonkey-1-0-conflicts-with-websites-using-jquery
-// this.$ = this.jQuery = jQuery.noConflict(true);
-// 不要了
-
-// 注意还有头文件在TM编辑器中
 
 
 (function () {
@@ -139,6 +121,33 @@ input:-webkit-autofill {
 
     }
 
+    // 如果ac_id=1,则重定向至8
+    function getQueryStringArgs(){
+        var qs = (location.search.length>0?location.search.substring(1):""),
+        args = {},
+        items = qs.length?qs.split("&"):[],
+        item = null,
+        name = null,
+        value = null,
+        i = 0,
+        len = items.length;
+
+        for(i = 0;i<len;i++){
+            item = items[i].split("=");
+            name = decodeURIComponent(item[0]);
+            value = decodeURIComponent(item[1]);
+            if(name.length){
+                args[name] = value;
+            }
+
+        }
+        return args;
+    }
+    var args  = getQueryStringArgs();
+    if(args["ac_id"] == 1){
+        location.assign('http://10.0.0.55/srun_portal_pc.php?ac_id=8&');
+    }
+
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
@@ -184,7 +193,7 @@ input:-webkit-autofill {
             return '早点睡'
         }
     }
-    
+
     var Local = {}
     Local.leftMouse = 0
     Local.username = GM_getValue("username") || "";
@@ -202,7 +211,7 @@ input:-webkit-autofill {
     var bg_color = pick_color();
     var bg_color_dark = reduce(bg_color,90)
 
-    
+
     $("body").css("background-color", bg_color);
     // $(".logo").remove();
     // $(" ul.login>li:nth-child(3)>label:nth-child(2)").remove();
