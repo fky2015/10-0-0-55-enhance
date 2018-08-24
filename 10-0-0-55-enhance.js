@@ -121,32 +121,34 @@ input:-webkit-autofill {
 
     }
 
+    // 2018-08-24 经测试， 在图书馆必须ac_id = 1， 故取消该功能
     // 如果ac_id=1,则重定向至8
-    function getQueryStringArgs(){
-        var qs = (location.search.length>0?location.search.substring(1):""),
-        args = {},
-        items = qs.length?qs.split("&"):[],
-        item = null,
-        name = null,
-        value = null,
-        i = 0,
-        len = items.length;
+    // function getQueryStringArgs(){
+    //     var qs = (location.search.length>0?location.search.substring(1):""),
+    //     args = {},
+    //     items = qs.length?qs.split("&"):[],
+    //     item = null,
+    //     name = null,
+    //     value = null,
+    //     i = 0,
+    //     len = items.length;
 
-        for(i = 0;i<len;i++){
-            item = items[i].split("=");
-            name = decodeURIComponent(item[0]);
-            value = decodeURIComponent(item[1]);
-            if(name.length){
-                args[name] = value;
-            }
+    //     for(i = 0;i<len;i++){
+    //         item = items[i].split("=");
+    //         name = decodeURIComponent(item[0]);
+    //         value = decodeURIComponent(item[1]);
+    //         if(name.length){
+    //             args[name] = value;
+    //         }
 
-        }
-        return args;
-    }
-    var args  = getQueryStringArgs();
-    if(args["ac_id"] == 1){
-        location.assign('http://10.0.0.55/srun_portal_pc.php?ac_id=8&');
-    }
+    //     }
+    //     return args;
+    // }
+
+    // var args  = getQueryStringArgs();
+    // if(args["ac_id"] == 1){
+    //     location.assign('http://10.0.0.55/srun_portal_pc.php?ac_id=8&');
+    // }
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
