@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         10.0.0.55 enhance
 // @namespace    http://tampermonkey.net/
-// @version      1.1.0
+// @version      1.2.0
 // @description  make 10.0.0.55 clearer and better
 // @author       FKYnJYQ
 // @match        http://10.0.0.55/srun_portal_pc.php?ac_id=*
